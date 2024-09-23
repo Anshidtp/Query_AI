@@ -4,4 +4,11 @@ langchain-community
 pypdf
 python-dotenv
 langchain-groq
-chromadb
+nltk
+pinecone
+pydantic
+python-dotenv
+sentence-transformers
+pandas
+openai
+uvicorn==0.30.6
