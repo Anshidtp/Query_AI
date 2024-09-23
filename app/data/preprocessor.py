@@ -3,9 +3,11 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import string
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.schema import Document
 
 nltk.download('punkt')
 nltk.download('stopwords')
+nltk.download('punkt_tab')
 
 def preprocess_text(text: str) -> str:
     """
@@ -39,7 +41,8 @@ def preprocess_text(text: str) -> str:
 
 # Create text chunks for extracted data
 def segment_text(extracted_data):
-    splitter = RecursiveCharacterTextSplitter(chunk_size = 500 , chunk_overlap = 40)
-    chunks = splitter.split_documents(extracted_data)
+    text_split = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=20)
+# Create a Document object 
+    chunks = text_split.transform_documents([Document(page_content=extracted_data)])
 
     return chunks

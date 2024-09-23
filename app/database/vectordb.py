@@ -3,6 +3,7 @@ from app.config import settings
 from typing import Dict, Any, List
 from pinecone import Pinecone,ServerlessSpec
 import time
+from langchain.schema import Document
 
 def connect_vecdb():
     pc = Pinecone(api_key=settings.PINECONE_API_KEY)
@@ -56,16 +57,28 @@ def connect_vecdb():
 #         results = self.index.query(query_vector, top_k=top_k, include_metadata=True)
 #         return results
 
-def upsert_to_pinecone(id: str, vector: List[float], metadata: Dict[str, Any]) -> None:
-    """
-    Upsert a vector and its metadata to Pinecone.
-    Args:
-        id (str): The unique identifier for the vector.
-        vector (List[float]): The vector to upsert.
-        metadata (Dict[str, Any]): The metadata associated with the vector.
-    """
+#Upsert a vector and its metadata to Pinecone.
+def upsert_to_pinecone(vectors: list, metadata: list):
     index = connect_vecdb()
-    index.upsert(vectors=[(id, vector, metadata)])
+    to_upsert = []
+    for i, (vector, meta) in enumerate(zip(vectors, metadata)):
+        # Ensure 'id' is present in the metadata, and 'text' is a string
+        vector_id = meta.get('id', str(i))  # Fallback to 'i' if no 'id' is found
+        
+        # Convert 'text' field to string if it's not already
+        if isinstance(meta.get('text'), Document):
+            meta['text'] = str(meta['text'])  # Extract or convert to string
+            
+        # If other fields in meta are complex objects, convert them similarly
+        
+        to_upsert.append({
+            "id": vector_id,         # The vector ID
+            "values": vector,        # The embedding vector
+            "metadata": meta         # The metadata, now properly formatted
+        })
+    
+    # Perform the upsert operation
+    index.upsert(vectors=to_upsert)
 
 def query_pinecone(query_vector: List[float], top_k: int = 5) -> Dict[str, Any]:
     """

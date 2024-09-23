@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from app.data.loader import load_data
 from app.data.preprocessor import preprocess_text, segment_text
-from app.embedder.embedding import Embedder
+from app.embedder.embedding import generate_embedding
 from app.database.vectordb import upsert_to_pinecone
 # from app.config import PINECONE_API_KEY, PINECONE_ENVIRONMENT, PINECONE_INDEX_NAME
 
@@ -27,10 +27,11 @@ def process_and_store_data(file_path):
     # Load data
     df = load_data(file_path)
     
+    
     # Process each resume
     for index, row in tqdm(df.iterrows(), total=df.shape[0], desc="Processing resumes"):
         # Combine relevant fields into a single text
-        text = f"Name: {row['name']}\nEmail: {row['email']}\nPhone: {row['phone']}\nSummary: {row['summary']}\nSkills: {row['skills']}\nExperience: {row['experience']}\nEducation: {row['education']}"
+        text = row['Resume_str']
         
         # Preprocess the text
         preprocessed_text = preprocess_text(text)
@@ -40,7 +41,7 @@ def process_and_store_data(file_path):
         
         # Generate embeddings and store in Pinecone
         for i, segment in enumerate(segments):
-            embedding = Embedder.generate_embeddings(segment)
+            embedding = generate_embedding(segment.page_content)
             metadata = {
                 "id": f"{index}_{i}",
                 "text": segment,
@@ -51,5 +52,5 @@ def process_and_store_data(file_path):
     print("Data ingestion completed successfully!")
 
 if __name__ == "__main__":
-    data_file_path = "data/resume_dataset.csv"
+    data_file_path = "dataset/Resume.csv"
     process_and_store_data(data_file_path)
