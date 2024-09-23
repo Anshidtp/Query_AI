@@ -12,3 +12,4 @@ sentence-transformers
 pandas
 openai
 uvicorn==0.30.6
+langchain-pinecone==0.2.0

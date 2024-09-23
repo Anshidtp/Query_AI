@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     PINECONE_Region: str
     PINECONE_INDEX_NAME: str
     Open_API_KEY: str
+    Groq_API_KEY: str
 
     class Config:
         env_file = ".env"

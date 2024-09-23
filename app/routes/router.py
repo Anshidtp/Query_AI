@@ -8,7 +8,7 @@ router = APIRouter()
 class Query(BaseModel):
     text: str
 
-@router.post("/query")
+@router.post("/query_ai")
 async def process_query(query: Query):
     try:
         relevant_chunks = retrieve_relevant_chunks(query.text)

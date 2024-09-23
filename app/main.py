@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.routes.router import router
 from app.config import settings
 
-app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
+app = FastAPI()
 
 app.include_router(router, prefix="/api")
 
