@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Processing...';
             responseOutput.textContent = 'Fetching response...';
 
-            const response = await fetch('http://localhost:8000/api/query', {
+            const response = await fetch('http://localhost:8000/api/query_ai', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
