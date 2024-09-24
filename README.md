@@ -2,6 +2,8 @@
 
 This is a Retrieval-Augmented Generation (RAG) system that processes unstructured data, generates embeddings, stores them in a vector database, and uses them to answer queries.
 
+![Demo](https://github.com/Anshidtp/Query_AI/blob/main/example/Frontend.png)
+
 
 ## Requirements:
  * Python 3.8+ or later
