@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await response.json();
-            responseOutput.textContent = data.answer;
+            console.log('Received data:', data);
+            responseOutput.textContent = data.response;
         } catch (error) {
             console.error('Error:', error);
             responseOutput.textContent = 'An error occurred while processing your query.';
