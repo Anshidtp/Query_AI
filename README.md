@@ -40,12 +40,9 @@ This is a Retrieval-Augmented Generation (RAG) system that processes unstructure
 
 4. **Set up environment variables:**
 
-    Create a `.env` file in the root directory of the project and add your Replicate API token
+    Create a `.env` file in the root directory of the project and add Following Details
 
     ```env
-    #REPLICATE
-    REPLICATE_API_TOKEN=your_replicate_api_token
-
     PINECONE_API_KEY = "Your_PINECONE_API_KEY"
     PINECONE_Region = "Your_PINECONE_Region"
     PINECONE_INDEX_NAME = "Your_PINECONE_INDEX_NAME"
